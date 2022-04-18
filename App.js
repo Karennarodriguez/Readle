@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {Home} from "./screens/Home";  
-import {Discover} from "./screens/Discover";
+// import {Discover} from "./screens/Discover";
 import {Profile} from "./screens/Profile";
 import {BookDetail} from "./screens/BookDetail"; 
 import Tabs from "./navigation/tabs"; 
@@ -29,7 +29,7 @@ const App = () => {
       >
         {/*Tabs*/}
         <Stack.Screen name = "Home" component = {Tabs} options = {{headerShown: false}}/>
-        <Stack.Screen name = "Discover" component = {Discover} options = {{headerShown: false}}/>
+        {/* <Stack.Screen name = "Discover" component = {Discover} options = {{headerShown: false}}/> */}
 
         <Stack.Screen name = "Profile" component = {Profile} options = {{headerShown: false}}/>
         
