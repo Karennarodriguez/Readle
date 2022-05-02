@@ -1,0 +1,6 @@
+module Pods_Readle_final_Readle_finalTests {
+  umbrella header "Pods-Readle_final-Readle_finalTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

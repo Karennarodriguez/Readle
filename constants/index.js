@@ -1,8 +1,8 @@
-import images from "../constants/images"; 
-import icons from "../constants/icons"; 
+// import images from "./images"; 
+import icons from "./icons"; 
 
 
-export {images, icons};
+export {icons};
 
 
 

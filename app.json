@@ -1,20 +1,4 @@
 {
-  "expo": {
-    "name": "Readle",
-    "slug": "Readle",
-    "version": "1.0.0",
-    "orientation": "portrait",
-   
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-    }
-  }
-}
+  "name": "Readle_final",
+  "displayName": "Readle_final"
+} 
