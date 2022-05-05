@@ -12,7 +12,7 @@ const Profile = ({navigation}) => {
             contentContainerStyle = {{justifyContent: 'center', alignItems:'center'}}
             showsVerticalScrollIndicator={false}
           >
-            <Image style = {styles.userImg} source = {require('../assets/icons/user_icon.png')}/>
+            <Image style = {{height: 10, width:  10, borderRadius: 75}} source = {require('../assets/icons/user_icon.png')}/>
 
 
           </ScrollView>
@@ -46,5 +46,10 @@ const styles = StyleSheet.create({
       marginTop: 5,
       marginLeft: 6, 
     },
+    userImg:{
+      height: 10,
+      width:  10, 
+      borderRadius: 75,
+    }
   
   })
