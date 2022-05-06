@@ -88,22 +88,32 @@ const Discover = ({navigation}) => {
 
      {/* FINAL PRODUCT */} 
     return(
+      
         <SafeAreaView style = {{flex: 1,  backgroundColor: "white",}}>
             <Text style = {styles.h1}>Discover</Text>
+            
             <NativeBaseProvider>
-              
-                <Center flex={1} px="2">
-                <Input value={book} w="75%" maxW="300px" onChangeText={handleChange} placeholder="Value Controlled Input" InputRightElement={<Button  ml={1} roundedLeft={0} roundedRight="md" onPress={handleSubmit}>Go</Button>} />
-                    
-                </Center>
-                <FlatList 
-                  data = {result}
-                  showsHorizontalScrollIndicator = {false}
-                  renderItem={renderItem}
-                  keyExtractor = {item => `${item.id}`}
-                  
-                />
+              <ScrollView>
+              <Center flex={1} px="2">
+              <Input value={book} w="75%" maxW="300px" 
+                onChangeText={handleChange} placeholder="Search Books & Authors" 
+                InputRightElement={<Button  ml={1} roundedLeft={0} roundedRight="md" 
+                onPress={handleSubmit}>Go</Button>} 
+              />
+
+              </Center>
+              <FlatList 
+                data = {result}
+                showsHorizontalScrollIndicator = {false}
+                renderItem={renderItem}
+                keyExtractor = {item => `${item.id}`}
+
+              />
+              </ScrollView>
             </NativeBaseProvider>
+            
+      
+           
 
             
             
@@ -135,7 +145,8 @@ const styles = StyleSheet.create({
       color: "#1E1B26",
       fontWeight: "bold",
       paddingLeft: 12, 
-      paddingTop: 12
+      paddingTop: 12,
+      paddingBottom: 15,
     },
   
     h3: {
