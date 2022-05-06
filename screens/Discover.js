@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react"; 
 import axios from "axios"; 
-import {SafeAreaView, View, TextInput, Text, StyleSheet, ActivityIndicator, Dimensions, TouchableOpacity, ScrollView, FlatList, Alert} from "react-native";
+import {SafeAreaView, View, TextInput, Text, StyleSheet, ActivityIndicator, Dimensions, TouchableOpacity, ScrollView, Footer, FlatList, Alert} from "react-native";
 import {VStack, Input, Button, Icon, IconButton, Image, NativeBaseProvider, Center, Box, Divider, Heading, Stack, SearchIcon}from 'native-base';
+import {icons} from '../constants';
 
 const API_KEY = "AIzaSyA8_Yoqzedlv3Xnb5kEjcN6pp9UEmBb07o"
 const GOOGLE_BOOKS_URL  = "https://www.googleapis.com/books";
@@ -19,15 +20,8 @@ const Discover = ({navigation}) => {
     console.log("hi")
     const book = event; 
     setBook(book);
-
-    // if (book != undefined) {
-    //   console.log("hello")
-    //   setBook(book);
-
-    // } 
     
   }
-
 
 
   async function handleSubmit(event){
@@ -43,48 +37,93 @@ const Discover = ({navigation}) => {
   const renderItem = ({item}) => {
     console.log('render item', item)
     return (
-      <TouchableOpacity
-        style = {{flex: 1, marginRight:10, marginTop:20}}
-        // onPress = {() => setSelectedCategory(item.id)}
-      >
-        <Text>{item.volumeInfo.title}</Text>
-        {console.log("https:"+ item.volumeInfo.imageLinks.thumbnail.substring(5,100))}
-        <Image 
-          source={{uri: "https:"+ item.volumeInfo.imageLinks.thumbnail.substring(5,100)}} 
-          alt = {item.volumeInfo.title +" Cover"}  
-          width={110}
-          height={160}
-          borderRadius={6}
-          />
+      <View style = {{marginVertical:10}}> 
+        <TouchableOpacity
+          style = {{flex: 1, flexDirection: "row", marginRight: 25, marginTop:20}}
+          // onPress = {() => setSelectedCategory(item.id)}
+        >
+          {/* BOOK COVER */}
+          <Image 
+            source={{uri: "https:"+ item.volumeInfo.imageLinks.thumbnail.substring(5,100)}} 
+            alt = {item.volumeInfo.title +" Cover"}  
+            resizeMode = "cover"
+            width={110}
+            height={160}
+            borderRadius={6}
+            />
+            {/* TITLE & AUTHOR */}
+            
+            <View style = {{flex: 1, marginLeft: 15}}>
+              <View>
+              <Text style = {styles.h3}>
+                {item.volumeInfo.title}
+              </Text>
+              <Text style= {{paddingRight: 5, color: "gray" }}>
+                {item.volumeInfo.authors}
+              </Text>
+            </View>
+            
+           
+            <View style = {{flexDirection: "row", marginTop: 6  }} >
+            {/* PAGE COUNT */}
+            <Image 
+              source = {icons.page_filled_icon}
+              alt = {"pages"} 
+              resizeMode = "contain"
+              style = {{
+                width: 18, 
+                height: 18, 
+                tintColor: "gray"
+            }}/>
+            
+            <Text 
+              style ={{ paddingRight: 10, paddingLeft:5, paddingTop: 3, color: "gray", fontSize: 12}}> 
+              {item.volumeInfo.pageCount}
+            </Text>
 
-      </TouchableOpacity>
+             {/* NUMBER READ */}
+             <Image 
+              source = {icons.read_icon}
+              alt = {"pages"} 
+              resizeMode = "contain"
+              style = {{
+                width: 20, 
+                height: 20, 
+                tintColor: "gray"
+            }}/>
+            
+            <Text 
+              style ={{  paddingRight: 10, paddingTop: 3, paddingLeft: 5, color: "gray", fontSize: 12}}> 
+              {item.volumeInfo.ratingsCount}
+            </Text>
+
+            {/* AVG RATING */}
+            <Image 
+              source = {icons.star_icon}
+              alt = {"pages"} 
+              resizeMode = "contain"
+              style = {{
+                width: 16, 
+                height: 16, 
+                tintColor: "gray"
+            }}/>
+            
+            <Text 
+              style ={{ paddingTop: 3, paddingLeft: 5, color: "gray", fontSize: 12}}> 
+              {item.volumeInfo.averageRating}
+            </Text>
+
+
+
+            </View>
+          </View>
+
+
+        </TouchableOpacity>
+      </View>
     )
-
   } 
 
-  const handleChange1 = text => setBook(text);
-
-  function SearchBar() {
-    return <VStack my="4" space={5} w="90%" maxW="400px" divider={<Box px="2">
-            <Divider/> </Box>}>
-        <VStack w="100%" space={5} alignSelf="center">
-          
-          <Input 
-          // placeholder="Search Books & Authors"  
-          value={book} onChangeText={handleChange} width="100%" borderRadius="25" py="3" px="10" fontSize="14"  
-          // InputRightElement={<Button  ml={1} roundedLeft={0} roundedRight="md" onPress={handleSubmit}
-        // Go</Button>}
-         /> 
-
-        
-
-
-        </VStack>
-      </VStack>;
-    }
-
-
-    
 
      {/* FINAL PRODUCT */} 
     return(
@@ -93,44 +132,25 @@ const Discover = ({navigation}) => {
             <Text style = {styles.h1}>Discover</Text>
             
             <NativeBaseProvider>
-              <ScrollView>
-              <Center flex={1} px="2">
-              <Input value={book} w="75%" maxW="300px" 
+            
+            <VStack space ={5} marginLeft={10}> 
+             
+              <Input value={book} w="100%" maxW="310px" 
                 onChangeText={handleChange} placeholder="Search Books & Authors" 
                 InputRightElement={<Button  ml={1} roundedLeft={0} roundedRight="md" 
                 onPress={handleSubmit}>Go</Button>} 
               />
-
-              </Center>
-              <FlatList 
-                data = {result}
-                showsHorizontalScrollIndicator = {false}
-                renderItem={renderItem}
-                keyExtractor = {item => `${item.id}`}
-
-              />
-              </ScrollView>
+              
+                <FlatList 
+                  data = {result}
+                  showsHorizontalScrollIndicator = {false}
+                  renderItem={renderItem}
+                  keyExtractor = {item => `${item.id}`}
+                />
+            </VStack>
+           
             </NativeBaseProvider>
             
-      
-           
-
-            
-            
-                
-            {/* 
-            <FlatList
-              data ={result}
-              // keyExtractor={(result, index)=>{return }}  
-              
-              renderItem={(result, index) =>(
-                <View>
-                  <Image>{result.volumeInfo.imageLinks.thumbnail}</Image>
-                </View>
-              )}
-            />  */}
-
-            {/* {result.map(book =>(<Image source ={{uri:book.volumeInfo.imageLinks.thumbnail}}/>))} */}
           
         </SafeAreaView>
     )
