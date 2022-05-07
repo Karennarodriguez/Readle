@@ -1,14 +1,9 @@
 import React, {useState, useEffect} from "react"; 
 import axios from "axios"; 
-import {SafeAreaView, View, TextInput, Text, StyleSheet, ActivityIndicator, Dimensions, TouchableOpacity, ScrollView, Footer, FlatList, Alert} from "react-native";
-import {VStack, Input, Button, Icon, IconButton, Image, NativeBaseProvider, Center, Box, Divider, Heading, Stack, SearchIcon}from 'native-base';
+import {SafeAreaView, View,  Modal, Text, StyleSheet, TouchableOpacity,  FlatList, Alert} from "react-native";
+import {VStack, Input, Button, Menu, Image, NativeBaseProvider, Center, Box, Divider, Heading, Stack, SearchIcon}from 'native-base';
 import {icons} from '../constants';
-
-const API_KEY = "AIzaSyA8_Yoqzedlv3Xnb5kEjcN6pp9UEmBb07o"
-const GOOGLE_BOOKS_URL  = "https://www.googleapis.com/books";
-const GET_BOOKS_BY_NAME_ENDPOINT = "/v1/volumes?q=";
-const KEY_HEADER = "&key="+ API_KEY;
-
+import {ModalPicker} from '../components/ModalPicker'
 
 
 const Discover = ({navigation}) => {
@@ -17,11 +12,11 @@ const Discover = ({navigation}) => {
   const [apiKey,  setApiKey] = useState("AIzaSyA8_Yoqzedlv3Xnb5kEjcN6pp9UEmBb07o");
 
   function handleChange(event){
-    console.log("hi")
+
     const book = event; 
     setBook(book);
-    
   }
+  
 
 
   async function handleSubmit(event){
@@ -34,13 +29,18 @@ const Discover = ({navigation}) => {
 
     })
   }
+
+
   const renderItem = ({item}) => {
+
     console.log('render item', item)
     return (
       <View style = {{marginVertical:10}}> 
         <TouchableOpacity
           style = {{flex: 1, flexDirection: "row", marginRight: 25, marginTop:20}}
-          // onPress = {() => setSelectedCategory(item.id)}
+          onPress ={() => navigation.navigate("BookDetail", {
+            book: item
+          })}
         >
           {/* BOOK COVER */}
           <Image 
@@ -68,7 +68,7 @@ const Discover = ({navigation}) => {
             {/* PAGE COUNT */}
             <Image 
               source = {icons.page_filled_icon}
-              alt = {"pages"} 
+              alt = {"PG"} 
               resizeMode = "contain"
               style = {{
                 width: 18, 
@@ -84,7 +84,7 @@ const Discover = ({navigation}) => {
              {/* NUMBER READ */}
              <Image 
               source = {icons.read_icon}
-              alt = {"pages"} 
+              alt = {"Reads:"} 
               resizeMode = "contain"
               style = {{
                 width: 20, 
@@ -100,7 +100,7 @@ const Discover = ({navigation}) => {
             {/* AVG RATING */}
             <Image 
               source = {icons.star_icon}
-              alt = {"pages"} 
+              alt = {"Rating:"} 
               resizeMode = "contain"
               style = {{
                 width: 16, 
@@ -112,33 +112,66 @@ const Discover = ({navigation}) => {
               style ={{ paddingTop: 3, paddingLeft: 5, color: "gray", fontSize: 12}}> 
               {item.volumeInfo.averageRating}
             </Text>
+            </View>
 
-
-
+            <View style = {{flexDirection: 'row', marginTop:48}}>
+              <View style ={{justifyContent: 'center',
+              alignItems:'center', padding:10, marginRight: 8, backgroundColor:"#ffdfbf", height:40, borderRadius:4}}> 
+              <Text style = {{color:"#e76f51"}}>{item.volumeInfo.categories}</Text> 
+              </View>
             </View>
           </View>
-
-
         </TouchableOpacity>
+
+        {/* MORE ICON */}
+        {/* <TouchableOpacity
+          style = {{ position: 'absolute', top: 25, right: 25}}
+        >
+
+            <Image
+              source = {icons.three_more_icon}
+              resizeMode = "contain"
+              alt = "Add"
+              style = {{
+                width: 20, 
+                height:20,
+                tintColor: "gray"
+              }}
+            />
+        
+        </TouchableOpacity> */}
+         
       </View>
     )
   } 
 
 
+
      {/* FINAL PRODUCT */} 
     return(
       
-        <SafeAreaView style = {{flex: 1,  backgroundColor: "white",}}>
+        <SafeAreaView style = {{flex: 1,  backgroundColor: "white"}}>
             <Text style = {styles.h1}>Discover</Text>
             
             <NativeBaseProvider>
             
             <VStack space ={5} marginLeft={10}> 
              
-              <Input value={book} w="100%" maxW="310px" 
+              <Input activeBorderColor = "blue" variant="unstyled" value={book} w="100%" maxW="310px" 
                 onChangeText={handleChange} placeholder="Search Books & Authors" 
-                InputRightElement={<Button  ml={1} roundedLeft={0} roundedRight="md" 
-                onPress={handleSubmit}>Go</Button>} 
+                InputRightElement={<Button colorScheme = "dark" variant = "ghost" ml={4} roundedLeft="sm" roundedRight="sm" 
+                onPress={handleSubmit}>
+                <Image
+                  source = {icons.search_icon}
+                  alt = {"Go"} 
+                  resizeMode = "contain"
+                  style = {{
+                    width: 18, 
+                    height: 18, 
+                    tintColor: "emerald"
+                }}/>
+
+                </Button>} 
               />
               
                 <FlatList 
@@ -147,7 +180,10 @@ const Discover = ({navigation}) => {
                   renderItem={renderItem}
                   keyExtractor = {item => `${item.id}`}
                 />
+
+                
             </VStack>
+
            
             </NativeBaseProvider>
             
@@ -166,14 +202,15 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
       paddingLeft: 12, 
       paddingTop: 12,
-      paddingBottom: 15,
+      fontFamily: 'Optima-Bold'
     },
   
     h3: {
       fontSize: 16, 
       lineHeight: 22,
       color: "#1E1B26",
-      fontWeight: "bold"
+      fontWeight: "bold",
+      fontFamily: 'Optima-Bold'
     },
   
     h5: {

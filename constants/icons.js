@@ -15,6 +15,8 @@ export const back_arrow_icon = require("../assets/icons/back_arrow_icon.png");
 export const more_icon = require("../assets/icons/more_icon.png");
 export const user_icon = require("../assets/icons/user_icon.png");
 export const star_icon = require("../assets/icons/star_icon.png");
+export const three_more_icon = require("../assets/icons/three_more_icon.png");
+export const sq_more_icon = require("../assets/icons/sq_more_icon.png");
 
 export default {
     card_icon,
@@ -33,5 +35,7 @@ export default {
     back_arrow_icon,
     more_icon,
     user_icon,
-    star_icon
+    star_icon,
+    three_more_icon, 
+    sq_more_icon
 }

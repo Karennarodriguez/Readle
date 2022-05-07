@@ -13,14 +13,13 @@ const Tabs = () => {
       // need to fix
       tabBarOptions={{
         showLabel: false,  
-        activeBackgroundColor: "#1E1B26",
-        inactiveBackgroundColor:"#1E1B26",
-      
+        activeBackgroundColor: "white",
+        inactiveBackgroundColor: "white",
       }}
       
       screenOptions= {({route}) => ({
         tabBarIcon: ({focused}) => {
-          const tintColor = focused ? "white" : "gray"; 
+          const tintColor = focused ? "#788282" : "#cdd2d7"; 
           switch(route.name){
           case "Home": 
             return(

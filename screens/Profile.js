@@ -4,23 +4,48 @@ import {SafeAreaView, View, Text, StyleSheet, Dimensions, Image, TouchableOpacit
 const Profile = ({navigation}) => {
   // const {user, logout} = useContext(AuthContext); 
 
+  function renderProfileHeader(){
+    return(
+      <View style = {{justifyContent: 'center', alignItems:'center', flexDirection: "row"}}>
+              <View> 
+                <Image 
+                style = {{height: 100, width:  100, borderRadius: 65, marginRight: 30}} 
+                source = {{uri: "https://avatars.githubusercontent.com/u/20973064?v=4"}}
+                />
+              </View>
+
+              <View style = {{marginTop: 10,  alignItems:'center'}}>
+                <Text style = {styles.h3}> Karenna Rodriguez</Text>
+
+                <View style = {{flexDirection: "row", marginTop: 20}}>
+                  <View style = {{flexDirection: "column", alignItems: "center",marginRight: 25}}>
+                    <Text style = {styles.h5}>26</Text>
+                    <Text style = {styles.body5}>Following</Text>
+                  </View>
+
+                  <View style = {{flexDirection: "column", alignItems: "center"}}>
+                    <Text style = {styles.h5}> 23</Text>
+                    <Text style = {styles.body5}>Followers</Text>
+                  </View>
+                </View>
+            </View>
+          </View>
+
+    )
+  }
+
   return(
       <SafeAreaView style = {{flex: 1,  backgroundColor: "white"}}>
           <Text style={styles.h1}>Profile</Text>
           <ScrollView 
-            style = {{flex: 1, backgroundColor: "white" }}
+            style = {{flex: 5, backgroundColor: "white", marginTop: 10 }}
             contentContainerStyle = {{justifyContent: 'center', alignItems:'center'}}
             showsVerticalScrollIndicator={false}
           >
-            <Image 
-            style = {{height: 40, width:  40, borderRadius: 65}} 
-            source = {require('../assets/icons/user_icon.png')}
-            />
-
-            <Text style = {styles.h3}> Harry Styles</Text>
-            <Text> Lorem Ipsum </Text>
-
-
+            {renderProfileHeader()}
+            <View style = {{marginTop: 30, alignSelf: 'flex-start',  marginLeft: 10}}>
+              <Text style = {styles.h3}> Favorites</Text>
+            </View>
 
           </ScrollView>
       </SafeAreaView>
@@ -36,22 +61,27 @@ const styles = StyleSheet.create({
       color: "#1E1B26",
       fontWeight: "bold",
       paddingLeft: 12, 
-      paddingTop: 12
+      paddingTop: 12,
+      fontFamily: 'Optima-Bold'
     },
   
     h3: {
-      fontSize: 16, 
+      fontSize: 18, 
       lineHeight: 22,
       color: "#1E1B26",
-      fontWeight: "bold"
+      fontWeight: "bold",
+      fontFamily: 'Optima-Bold'
     },
   
     h5: {
-      fontSize: 12, 
-      lineHeight: 18,
+      fontSize: 15, 
       color: "#1E1B26",
-      marginTop: 5,
-      marginLeft: 6, 
+      fontWeight: "bold",
+    },
+
+    body5: {
+      fontSize: 12, 
+      color: "gray"
     },
 
     userImg:{
