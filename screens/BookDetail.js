@@ -1,33 +1,71 @@
 import React, {useState, useEffect} from "react"; 
-import {SafeAreaView, View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ScrollView, Animated} from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ScrollView, Animated} from "react-native";
 import {VStack, Button, Menu, NativeBaseProvider, Center} from 'native-base';
-import { Item } from "react-native-paper/lib/typescript/components/List/List";
 import {icons} from '../constants';
+
+// import { db } from "../firebaseConfig";
+// import {doc} from "@react-native-firebase/firestore";
 
 
 const LineDivider = () => {
     return (
         <View  style  = {{width: 1, paddingVertical: 5}}>
             <View style = {{ flex: 1, borderLeftColor: "#e76f51", borderLeftWidth: 1 }}></View>
-
         </View>
     )
 }
 
-const BookDetail = ({route, navigation}) => {
-const [book, setBook] = useState(null); 
-const [scrollViewWholeHeight, setScrollViewWholeHeight] = useState(1);
-const [scrollViewVisibleHeight, setScrollViewVisibleHeight] = useState(0);
-const indicator = new Animated.Value(0); 
-const [shouldOverlapWithTrigger] = useState(false);
-const [position, setPosition] = useState("auto");
+
+const BookDetail = ({ route, navigation}) => {
+    const [book, setBook] = useState(null); 
+    const [scrollViewWholeHeight, setScrollViewWholeHeight] = useState(1);
+    const [scrollViewVisibleHeight, setScrollViewVisibleHeight] = useState(0);
+    const indicator = new Animated.Value(0); 
+    const [shouldOverlapWithTrigger] = useState(false);
+    const [position, setPosition] = useState("auto");
+    const [isLiked, setIsLiked] = useState(false); 
+    const [favorites, setFavorites] = useState([]);
+    const [bookList, setBookList] = useState([]);
+   
+
+    const onPress = async () => {
+        setIsLiked((isLiked) => !isLiked)
+        setFavorites(book)
+        // AsyncStorage.setItem("favorite_books", favorites)
+    }
+
+
+    // async function addBook(newBook){
+    //     let temp = [...bookList];
+    //     temp.unshift(newBook);
+    //     // const tempString = JSON.stringify(temp);
+    //     // await AsyncStorage.setItem("bookList", tempString)
+    //     setBookList(temp);
+    // }
+    // const addBook = (newBook) => {
+
+    //     const newDoc  =  doc(db, "currentlyReading", "newBook" )
+    //     const docData = {
+    //         image: "https:"+ newBook.volumeInfo.imageLinks.thumbnail.substring(5,100),
+    //         name: newBook.volumeInfo.title,
+    //     }
+    //     setDoc (newDoc, docData)
+    //     .then(()=>{
+    //         alert("document created!")
+
+    //     })
+    //     .catch((error)=>{
+    //         alert("failed")
+    //     })
+
+    // }
+    // getBook();
 
   useEffect(() => {
     let {book} = route.params;
     setBook(book);
   }, [book]); 
 
-  console.log(route.params)
 
   function renderBookInfoSection(){
       return(
@@ -75,10 +113,33 @@ const [position, setPosition] = useState("auto");
                     />
 
                 </TouchableOpacity>
+               
                 <View style = {{flex:  1, alignItems: 'center', justifyContent: 'center'}}>
                     <Text style = {styles.header}>
                         Book Detail
                     </Text> 
+                </View>
+
+                {/* LIKE BUTTON */}
+                <View>
+                    <TouchableOpacity
+                        onPress = {onPress}
+                    >
+                        {isLiked ? (
+                            <Image 
+                                source={icons.heart_icon}
+                                style = {[styles.heart, styles.heartFilled]}
+                            />
+                            ) : (
+                            
+                            <Image 
+                                source={icons.heart_icon}
+                                style = {styles.heart}
+                            />
+                            )
+                        }
+
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -198,6 +259,7 @@ const [position, setPosition] = useState("auto");
             <Text style = {styles.h3}>
                 Description
             </Text>
+
             <Text style = {styles.body2}>
                 {book.volumeInfo.description}
             </Text>
@@ -215,9 +277,10 @@ function renderDropDown(){
                 Add to a Bookshelf
                 </Button>;
         }}>
-            <Menu.Item>Currently Reading</Menu.Item>
-            <Menu.Item>Want To Read</Menu.Item>
-            <Menu.Item>Have Read</Menu.Item>
+            <Menu.Item onPress={()=>console.log("Currently Reading")}>Currently Reading</Menu.Item> 
+            {/* {console.log({bookList})} */}
+            <Menu.Item onPress={()=> console.log("Want To Read")}>Want To Read</Menu.Item>
+            <Menu.Item onPress={()=> console.log("Have Read")}>Have Read</Menu.Item>
         </Menu>
     </VStack>
     )
@@ -294,7 +357,7 @@ const styles = StyleSheet.create({
       lineHeight: 22, 
       color: "#1E1B26",
       fontWeight: "bold",
-      marginRight: 30, 
+      marginRight: 0, 
 
     },
   
@@ -316,6 +379,21 @@ const styles = StyleSheet.create({
         fontSize: 16,
         lineHeight: 30, 
         color: "gray",
+    },
+    
+    heart: {
+        tintColor: "gray",
+        height: 25, 
+        width: 25,
+        marginRight:10
+    },
+
+    heartFilled: {
+        tintColor: "#E83941",
+        height: 25, 
+        width: 25,
+        marginRight:10
     }
+
   
   })

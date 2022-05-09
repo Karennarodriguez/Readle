@@ -1,5 +1,6 @@
 import React, { useContext } from "react"; 
-import {SafeAreaView, View, Text, StyleSheet, Dimensions, Image, TouchableOpacity, ScrollView, FlatList} from "react-native";
+import {SafeAreaView, View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView, FlatList} from "react-native";
+import { Center, Box, Progress, NativeBaseProvider, Image , HStack} from 'native-base';
 
 const Profile = ({navigation}) => {
   // const {user, logout} = useContext(AuthContext); 
@@ -7,10 +8,11 @@ const Profile = ({navigation}) => {
   function renderProfileHeader(){
     return(
       <View style = {{justifyContent: 'center', alignItems:'center', flexDirection: "row"}}>
-              <View> 
+              <View style={{marginTop: 10}}> 
                 <Image 
                 style = {{height: 100, width:  100, borderRadius: 65, marginRight: 30}} 
                 source = {{uri: "https://avatars.githubusercontent.com/u/20973064?v=4"}}
+                alt = {"Profile Image"}
                 />
               </View>
 
@@ -34,10 +36,11 @@ const Profile = ({navigation}) => {
     )
   }
 
+
   return(
       <SafeAreaView style = {{flex: 1,  backgroundColor: "white"}}>
           <Text style={styles.h1}>Profile</Text>
-          <ScrollView 
+          <NativeBaseProvider
             style = {{flex: 5, backgroundColor: "white", marginTop: 10 }}
             contentContainerStyle = {{justifyContent: 'center', alignItems:'center'}}
             showsVerticalScrollIndicator={false}
@@ -46,8 +49,27 @@ const Profile = ({navigation}) => {
             <View style = {{marginTop: 30, alignSelf: 'flex-start',  marginLeft: 10}}>
               <Text style = {styles.h3}> Favorites</Text>
             </View>
+            
+            <HStack>
+              <TouchableOpacity>
+                <Image 
+                    style = {{height: 140, width:  100,  marginLeft: 25, marginTop: 30, borderRadius: 6} }
+                    source = {{uri: "https://images-na.ssl-images-amazon.com/images/I/51OQ3fuFNcL.jpg"}}
+                    alt = {"Profile Image"}
+                  />
+            </TouchableOpacity>
 
-          </ScrollView>
+            <TouchableOpacity>
+                <Image 
+                    style = {{height: 140, width:  100,  marginLeft: 25, marginTop: 30, borderRadius: 6} }
+                    source = {{uri: "https://quotepark.com/media/works/3775-in-watermelon-sugar.detail.png"}}
+                    alt = {"Profile Image"}
+                  />
+            </TouchableOpacity>
+          </HStack>
+            
+
+          </NativeBaseProvider>
       </SafeAreaView>
   );
 };

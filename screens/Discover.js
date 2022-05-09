@@ -3,20 +3,23 @@ import axios from "axios";
 import {SafeAreaView, View,  Modal, Text, StyleSheet, TouchableOpacity,  FlatList, Alert} from "react-native";
 import {VStack, Input, Button, Menu, Image, NativeBaseProvider, Center, Box, Divider, Heading, Stack, SearchIcon}from 'native-base';
 import {icons} from '../constants';
-import {ModalPicker} from '../components/ModalPicker'
 
 
-const Discover = ({navigation}) => {
+
+
+const Discover = ({route, navigation}) => {
+  console.log("Discover");
   const [book, setBook] = useState(""); 
   const [result, setResult] = useState([]);
   const [apiKey,  setApiKey] = useState("AIzaSyA8_Yoqzedlv3Xnb5kEjcN6pp9UEmBb07o");
+  
 
   function handleChange(event){
 
     const book = event; 
     setBook(book);
   }
-  
+
 
 
   async function handleSubmit(event){
@@ -25,7 +28,7 @@ const Discover = ({navigation}) => {
     .then(data => {
       setResult([]);
       setResult(data.data.items);
-      // console.log(data.data.items);
+      console.log(data.data.items);
 
     })
   }
@@ -33,7 +36,7 @@ const Discover = ({navigation}) => {
 
   const renderItem = ({item}) => {
 
-    console.log('render item', item)
+    // console.log('render item', item)
     return (
       <View style = {{marginVertical:10}}> 
         <TouchableOpacity
@@ -116,8 +119,8 @@ const Discover = ({navigation}) => {
 
             <View style = {{flexDirection: 'row', marginTop:48}}>
               <View style ={{justifyContent: 'center',
-              alignItems:'center', padding:10, marginRight: 8, backgroundColor:"#ffdfbf", height:40, borderRadius:4}}> 
-              <Text style = {{color:"#e76f51"}}>{item.volumeInfo.categories}</Text> 
+              alignItems:'center', padding:10, marginRight: 8, backgroundColor:"#eda489", opacity: 0.4, height:40, borderRadius:4}}> 
+              <Text style = {{color:"black"}}>{item.volumeInfo.categories}</Text> 
               </View>
             </View>
           </View>
@@ -168,7 +171,7 @@ const Discover = ({navigation}) => {
                   style = {{
                     width: 18, 
                     height: 18, 
-                    tintColor: "emerald"
+                    
                 }}/>
 
                 </Button>} 

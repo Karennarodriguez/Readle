@@ -7,7 +7,7 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
 const Tab = createBottomTabNavigator(); 
 
-const Tabs = () => {
+const Tabs = ({navigation}) => {
   return (
     <Tab.Navigator
       // need to fix
@@ -52,14 +52,17 @@ const Tabs = () => {
         }
 
       })}>
-
+      
       <Tab.Screen
         name = "Home"
-        component = {Home}
+        // component = {() => <Home bookList = {props.bookList} />}
+        //component = {Home(props.bookList, props.setBookList())}
+        component={Home}
       /> 
 
       <Tab.Screen
         name = "Discover"
+        // component = {() => <Discover bookList = {props.bookList} navigation />}
         component = {Discover}
       /> 
 
